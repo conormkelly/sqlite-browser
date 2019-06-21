@@ -1,16 +1,2 @@
-<textarea [(ngModel)]="sql" class="textarea-sql form-control" placeholder="Enter sql" rows="3"></textarea>
-
-<button (click)="executeSql()" type="button btn-sm" class="btn btn-primary">Execute</button>
-
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th *ngFor="let heading of tableData.headings">{{heading}}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let row of tableData.rows">
-            <td *ngFor="let value of row">{{value}}</td>
-        </tr>
-    </tbody>
-</table>
+<app-sql-entry></app-sql-entry>
+<app-output-table></app-output-table>

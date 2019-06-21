@@ -1,0 +1,14 @@
+<div class="main">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th *ngFor="let heading of tableData.headings">{{heading}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of tableData.rows">
+        <td *ngFor="let value of row">{{value}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

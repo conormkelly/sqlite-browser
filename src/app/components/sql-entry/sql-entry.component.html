@@ -1,0 +1,11 @@
+<div class="main">
+  
+  <div class="container-sql-input">
+    <textarea [(ngModel)]="sql" class="sql-input form-control" placeholder="Enter SQL" rows="3"></textarea>
+  </div>
+
+  <div class="container-execute-button">
+    <button (click)="executeSql()" type="button" class="btn btn-sm btn-primary">Execute</button>
+  </div>
+
+</div>
