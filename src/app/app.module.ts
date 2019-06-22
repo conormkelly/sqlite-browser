@@ -7,12 +7,14 @@ import { NgxElectronModule } from 'ngx-electron'
 import { AppComponent } from './app.component';
 import { SqlEntryComponent } from './components/sql-entry/sql-entry.component';
 import { OutputTableComponent } from './components/output-table/output-table.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SqlEntryComponent,
-    OutputTableComponent
+    OutputTableComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

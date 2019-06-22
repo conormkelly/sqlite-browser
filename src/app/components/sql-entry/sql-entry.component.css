@@ -1,8 +1,9 @@
 .main {
     display: flex;
-    margin: 1rem 1.5rem;
-    justify-content: space-between;
     flex-direction: row;
+    justify-content: space-between;
+
+    margin: 1rem 1.5rem;
     max-width: 90%;
 }
 
@@ -10,8 +11,18 @@
     min-width: 80%;
 }
 
-.container-execute-button {
+.container-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     margin-left: 1rem;
     min-width: 5%;
-    align-self: flex-start;
+}
+
+.container-execute-button {    
+    display: flex;
+}
+
+.container-loader {
+    display: flex;
 }
