@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { Subject } from 'rxjs';
-import { FormattingService } from './formatting.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
   constructor(
-    private electronService: ElectronService,
-    private formattingService: FormattingService
+    private electronService: ElectronService
   ) { }
 
   sqlite3 = this.electronService.remote.require('sqlite3').verbose();
@@ -52,13 +50,17 @@ export class DatabaseService {
           throw err;
         } else {
           if (rows.length >= 1) {
-            const tableData = this.formattingService.extractTableData(rows);
-            this.tableDataUpdated.next(tableData);
+
+            const headings = Object.keys(rows[0]);
+
+            this.tableDataUpdated.next({ headings: headings, rows: rows });
+            this.loadingStatusUpdated.next(false);
+
           } else {
-            console.log(rows);
+            console.log('No rows!');
+            this.loadingStatusUpdated.next(false);
           }
         }
-        this.loadingStatusUpdated.next(false);
       });
     });
   }
