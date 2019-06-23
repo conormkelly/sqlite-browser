@@ -48,6 +48,7 @@ import { SqlEntryComponent } from './components/sql-entry/sql-entry.component';
 import { OutputTableComponent } from './components/output-table/output-table.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { DatabaseSelectComponent } from './components/modals/database-select/database-select.component';
+import { TableInfoComponent } from './components/table-info/table-info.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { DatabaseSelectComponent } from './components/modals/database-select/dat
     SqlEntryComponent,
     OutputTableComponent,
     LoaderComponent,
-    DatabaseSelectComponent
+    DatabaseSelectComponent,
+    TableInfoComponent
   ],
   imports: [
     BrowserModule,

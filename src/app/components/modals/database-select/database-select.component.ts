@@ -7,10 +7,16 @@ import { MatDialogRef } from '@angular/material';
   templateUrl: './database-select.component.html',
   styleUrls: ['./database-select.component.css']
 })
-export class DatabaseSelectComponent {
+export class DatabaseSelectComponent implements OnInit {
 
-  constructor(private dbService: DatabaseService, private dialogRef: MatDialogRef<DatabaseSelectComponent>) {
-    dialogRef.disableClose = true;
+  constructor
+    (
+      private dbService: DatabaseService,
+      private dialogRef: MatDialogRef<DatabaseSelectComponent>
+    ) { }
+
+  ngOnInit() {
+    this.dialogRef.disableClose = true;
   }
 
   selectDatabase() {
