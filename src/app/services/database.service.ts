@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { Subject } from 'rxjs';
+import { TableData } from '../models/table.data';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,29 @@ export class DatabaseService {
     private electronService: ElectronService
   ) { }
 
-  sqlite3 = this.electronService.remote.require('sqlite3').verbose();
+  private sqlite3 = this.electronService.remote.require('sqlite3').verbose();
+
+  // Subjects for observables
+  tableDataUpdated = new Subject<TableData>();
+  loadingStatusUpdated = new Subject<boolean>();
 
   private db;
 
-  private tableDataUpdated = new Subject<any>();
-  private loadingStatusUpdated = new Subject<boolean>();
+  selectDatabase(callback) {
+    const thisWindow = this.electronService.remote.require('electron').BrowserWindow.getFocusedWindow();
+    const options = {
+      multiSelections: false,
+      filters: [{ name: 'SQLite database', extensions: ['db'] }],
+      title: 'Select database'
+    };
+
+    this.electronService.remote.dialog.showOpenDialog(
+      thisWindow, options, (selectedDbPathArray) => {
+        if (selectedDbPathArray) {
+          callback(selectedDbPathArray[0]);
+        }
+      });
+  }
 
   getTableDataListener() {
     return this.tableDataUpdated;
@@ -26,7 +44,7 @@ export class DatabaseService {
   }
 
   connect(dbPath) {
-    this.loadingStatusUpdated.next(true);
+    this.updateLoadingStatus(true);
 
     this.db = new this.sqlite3.Database(
       dbPath,
@@ -34,8 +52,9 @@ export class DatabaseService {
         if (err) {
           //! Add error handling
           throw err;
+
         } else {
-          this.loadingStatusUpdated.next(false);
+          this.updateLoadingStatus(false);
         }
       });
   }
@@ -49,32 +68,39 @@ export class DatabaseService {
           //! Add error handling
           throw err;
         } else {
-          if (rows.length >= 1) {
-
-            const headings = Object.keys(rows[0]);
-
-            this.tableDataUpdated.next({ headings: headings, rows: rows });
-            this.loadingStatusUpdated.next(false);
-
-          } else {
-            console.log('No rows!');
-            this.loadingStatusUpdated.next(false);
-          }
+          this.updateTableData(rows);
         }
       });
     });
   }
 
   close() {
-    this.loadingStatusUpdated.next(true);
+    this.updateLoadingStatus(true);
 
     this.db.close((err) => {
       if (err) {
         //! Add error handling
         throw err;
+
       } else {
-        this.loadingStatusUpdated.next(false);
+        this.updateLoadingStatus(false);
       }
     });
+  }
+
+  private updateLoadingStatus(isLoading: boolean) {
+    this.loadingStatusUpdated.next(isLoading);
+  }
+
+  private updateTableData(rows) {
+    if (rows.length > 0) {
+      const headings = Object.keys(rows[0]);
+      this.tableDataUpdated.next({ headings: headings, rows: rows });
+
+    } else {
+      console.log('No rows!');
+    }
+
+    this.updateLoadingStatus(false);
   }
 }

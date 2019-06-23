@@ -18,15 +18,18 @@ export class LoaderComponent implements OnInit {
 
   ngOnInit() {
     this.loadingListener$ = this.dbService.getLoadingListener().subscribe(isLoading => {
-      this.ngZone.run(() => {
-        console.log(isLoading);
-        this.isLoading = isLoading;
-      });
+      this.updateLoadingStatus(isLoading);
     })
   }
 
   ngOnDestroy() {
     this.loadingListener$.unsubscribe();
+  }
+
+  private updateLoadingStatus(isLoading) {
+    this.ngZone.run(() => {
+      this.isLoading = isLoading;
+    });
   }
 
 }

@@ -39,7 +39,7 @@ import {
   MatStepperModule,
 } from '@angular/material';
 
-import { CdkTableModule } from '@angular/cdk/table';
+// import { CdkTableModule } from '@angular/cdk/table';
 
 import { NgxElectronModule } from 'ngx-electron';
 
@@ -47,13 +47,15 @@ import { AppComponent } from './app.component';
 import { SqlEntryComponent } from './components/sql-entry/sql-entry.component';
 import { OutputTableComponent } from './components/output-table/output-table.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { DatabaseSelectComponent } from './components/modals/database-select/database-select.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SqlEntryComponent,
     OutputTableComponent,
-    LoaderComponent
+    LoaderComponent,
+    DatabaseSelectComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +95,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     MatStepperModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DatabaseSelectComponent]
 })
 export class AppModule { }

@@ -14,4 +14,7 @@ PRAGMA table_info(%tablename%);
 
 # Todo / Ideas
 * History feature
-* View tables and info
+* View tables and info once connected
+
+# Primary color for Bootstrap
+2196F3

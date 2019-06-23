@@ -6,7 +6,7 @@
 
   <div class="container-sidebar">
       <div class="container-execute-button">
-          <button (click)="executeSql()" type="button" class="btn btn-sm btn-primary">Execute</button>
+          <button [disabled]="isLoading" (click)="executeSql()" type="button" class="btn btn-sm btn-primary">Execute</button>
         </div>
       
         <div class="container-loader">

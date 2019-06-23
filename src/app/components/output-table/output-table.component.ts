@@ -12,14 +12,13 @@ import { TableData } from 'src/app/models/table.data';
   styleUrls: ['./output-table.component.css']
 })
 export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
-  tableData: TableData = {rows: [], headings: []};
-
-  dataSource: MatTableDataSource<object[]>;
-
   @ViewChild('tablePaginator', { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
+  tableData: TableData = { rows: [], headings: [] };
   tableDataListener$: Subscription;
+
+  dataSource: MatTableDataSource<object[]>;
 
   constructor(
     private ngZone: NgZone,
@@ -27,35 +26,33 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
-    this.dataSource = new MatTableDataSource(this.tableData.rows);
+    this.setTableProperties(this.tableData);
 
     this.tableDataListener$ = this.dbService.getTableDataListener().subscribe(tableData => {
-      // Running in ngZone forces change detection
-      this.ngZone.run(() => {
-        this.tableData = tableData;
-        this.dataSource = new MatTableDataSource(tableData.rows);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
+      this.setTableProperties(tableData);
     });
 
     // TODO: Remove this hardcoded connection
-    this.dbService.connect('C:/Dev/sqlite-testing/chinook.db');
+    this.dbService.connect('./chinook.db');
   }
 
   ngAfterViewInit() {
-    this.ngZone.run(() => {
-      this.dataSource.paginator = this.paginator;
-      console.log(this.paginator);
-      this.dataSource.sort = this.sort;
-    });
+    this.setTableProperties(this.tableData);
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+
+  setTableProperties(tableData: TableData) {
+    this.ngZone.run(() => {
+      this.tableData = tableData;
+      this.dataSource = new MatTableDataSource(this.tableData.rows);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   ngOnDestroy() {
