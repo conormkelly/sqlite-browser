@@ -1,0 +1,11 @@
+<h3 mat-dialog-title>Tables</h3>
+
+<mat-dialog-content>
+  <ul class="list-group">
+    <li *ngFor="let tableName of tableNames" class="list-group-item">{{tableName}}</li>
+  </ul>
+</mat-dialog-content>
+
+<div mat-dialog-actions>
+  <button mat-button cdkFocusInitial>Close</button>
+</div>

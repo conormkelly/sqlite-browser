@@ -16,6 +16,7 @@ export class DatabaseService {
   // Subjects for observables
   tableDataUpdated = new Subject<TableData>();
   loadingStatusUpdated = new Subject<boolean>();
+  tableMetadataUpdated = new Subject<any>();
 
   private db;
 
@@ -41,6 +42,65 @@ export class DatabaseService {
 
   getLoadingListener() {
     return this.loadingStatusUpdated;
+  }
+
+  getTableMetadataListener() {
+    return this.tableMetadataUpdated;
+  }
+
+  getTableMetadata() {
+    const SQL = `
+      SELECT 
+        name
+      FROM 
+        sqlite_master 
+      WHERE 
+        type = 'table' AND 
+        name NOT LIKE 'sqlite_%'`;
+
+    this.db.serialize(() => {
+      this.db.all(SQL, (err, rows) => {
+        if (err) {
+          //! Add error handling
+          throw err;
+        } else {
+          const tableNames = rows.map(row => row.name);
+          this.extractMetadata(tableNames);
+        }
+      });
+    });
+  }
+
+  private extractMetadata(tableNames: string[]) {
+    let tableMetadata = {};
+
+    tableNames.forEach((val, i, arr) => {
+      if (Object.is(arr.length - 1, i)) {
+        const sql = `PRAGMA table_info(${val})`;
+        this.db.all(sql, (err, rows) => {
+          if (err) {
+            //! Add error handling
+            throw err;
+          } else {
+            tableMetadata[val] = rows;
+            this.tableMetadataUpdated.next(tableMetadata);
+            console.log(tableMetadata);
+          }
+        });
+
+      } else {
+        const sql = `PRAGMA table_info(${val})`;
+        this.db.all(sql, (err, rows) => {
+          if (err) {
+            //! Add error handling
+            throw err;
+          } else {
+            tableMetadata[val] = rows;
+          }
+        });
+
+      }
+    });
   }
 
   connect(dbPath) {

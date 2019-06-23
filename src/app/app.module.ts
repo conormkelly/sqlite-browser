@@ -48,7 +48,7 @@ import { SqlEntryComponent } from './components/sql-entry/sql-entry.component';
 import { OutputTableComponent } from './components/output-table/output-table.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { DatabaseSelectComponent } from './components/modals/database-select/database-select.component';
-import { TableInfoComponent } from './components/table-info/table-info.component';
+import { TableInfoComponent } from './components/modals/table-info/table-info.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +98,6 @@ import { TableInfoComponent } from './components/table-info/table-info.component
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DatabaseSelectComponent]
+  entryComponents: [DatabaseSelectComponent, TableInfoComponent]
 })
 export class AppModule { }

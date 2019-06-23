@@ -37,6 +37,7 @@ export class SqlEntryComponent implements OnInit, OnDestroy {
   }
 
   executeSql() {
+    this.dbService.getTableMetadata();
     this.queryHistoryService.addToHistory(this.sql);
     this.dbService.execute(this.sql);
   }
