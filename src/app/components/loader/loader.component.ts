@@ -8,7 +8,7 @@ import { DatabaseService } from "src/app/services/database.service";
   styleUrls: ["./loader.component.css"]
 })
 export class LoaderComponent implements OnInit {
-  isLoading = true;
+  isLoading = false;
   loadingListener$: Subscription;
 
   constructor(private ngZone: NgZone, private dbService: DatabaseService) {}
