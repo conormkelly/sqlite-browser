@@ -6,8 +6,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   templateUrl: './error.component.html',
   styleUrls: ['./error.component.css']
 })
-export class ErrorComponent implements OnInit {
+export class ErrorComponent implements OnInit, AfterViewInit {
   errorMessage = '';
+  templateBinding = 'This is from the template!';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -17,6 +18,14 @@ export class ErrorComponent implements OnInit {
 
   ngOnInit() {
     this.ngZone.run(() => {
+      console.log('ngZone onInit');
+      this.errorMessage = this.data.errorMessage;
+    });
+  }
+
+  ngAfterViewInit() {
+    this.ngZone.run(() => {
+      console.log('ngZone afterViewInit');
       this.errorMessage = this.data.errorMessage;
     });
   }

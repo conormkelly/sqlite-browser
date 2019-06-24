@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { ErrorComponent } from '../components/modals/error/error.component';
+import { TableInfoComponent } from '../components/modals/table-info/table-info.component';
 
 @Injectable({
   providedIn: 'root'

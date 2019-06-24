@@ -1,9 +1,9 @@
 <h3 mat-dialog-title>Error</h3>
 
-<div mat-dialog-content>
-  <p>{{errorMessage}}</p>
-</div>
+<mat-dialog-content>
+  <p *ngIf="errorMessage.length > 0">{{errorMessage}}</p>
+</mat-dialog-content>
 
-<div mat-dialog-actions>
+<mat-dialog-actions>
   <button mat-button (click)="close()">Dismiss</button>
-<div>
+</mat-dialog-actions>
