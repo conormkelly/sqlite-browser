@@ -1,0 +1,23 @@
+<div class="card">
+  <div (click)="toggleCollapse()" class="clickable card-header">{{tableName}}</div>
+  <div [hidden]="isCollapsed" class="card-body">
+    <table class="table table-sm table-hover">
+      <tr>
+        <th>cid</th>
+        <th>dflt_value</th>
+        <th>name</th>
+        <th>notnull</th>
+        <th>pk</th>
+        <th>type</th>
+      </tr>
+      <tr *ngFor="let column of columnData">
+        <td>{{column.cid}}</td>
+        <td>{{column.dflt_value}}</td>
+        <td>{{column.name}}</td>
+        <td>{{column.notnull}}</td>
+        <td>{{column.pk}}</td>
+        <td>{{column.type}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

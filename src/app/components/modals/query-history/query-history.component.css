@@ -1,0 +1,9 @@
+.main-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.clickable-text:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }

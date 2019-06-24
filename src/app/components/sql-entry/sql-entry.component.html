@@ -8,6 +8,14 @@
       <div class="container-execute-button">
           <button [disabled]="isLoading" (click)="executeSql()" type="button" class="btn btn-sm btn-primary">Execute</button>
         </div>
+
+        <div class="container-table-info">
+          <button [disabled]="isLoading" (click)="showInfo()" type="button" class="btn btn-sm btn-primary">Info</button>
+        </div>
+
+        <div class="container-history">
+          <button [disabled]="isLoading" (click)="showHistory()" type="button" class="btn btn-sm btn-primary">History</button>
+        </div>
       
         <div class="container-loader">
           <app-loader></app-loader>

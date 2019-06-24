@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { Subject } from 'rxjs';
 import { TableData } from '../models/table.data';
+import { ErrorService } from './error.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
   constructor(
+    private errorService: ErrorService,
     private electronService: ElectronService
   ) { }
 
@@ -61,8 +63,7 @@ export class DatabaseService {
     this.db.serialize(() => {
       this.db.all(SQL, (err, rows) => {
         if (err) {
-          //! Add error handling
-          throw err;
+          this.handleError(err);
         } else {
           const tableNames = rows.map(row => row.name);
           this.extractMetadata(tableNames);
@@ -75,31 +76,18 @@ export class DatabaseService {
     let tableMetadata = {};
 
     tableNames.forEach((val, i, arr) => {
-      if (Object.is(arr.length - 1, i)) {
-        const sql = `PRAGMA table_info(${val})`;
-        this.db.all(sql, (err, rows) => {
-          if (err) {
-            //! Add error handling
-            throw err;
-          } else {
-            tableMetadata[val] = rows;
+      const sql = `PRAGMA table_info(${val})`;
+
+      this.db.all(sql, (err, rows) => {
+        if (err) {
+          this.handleError(err);
+        } else {
+          tableMetadata[val] = rows;
+          if (Object.is(arr.length - 1, i)) {
             this.tableMetadataUpdated.next(tableMetadata);
-            console.log(tableMetadata);
           }
-        });
-
-      } else {
-        const sql = `PRAGMA table_info(${val})`;
-        this.db.all(sql, (err, rows) => {
-          if (err) {
-            //! Add error handling
-            throw err;
-          } else {
-            tableMetadata[val] = rows;
-          }
-        });
-
-      }
+        }
+      });
     });
   }
 
@@ -110,9 +98,7 @@ export class DatabaseService {
       dbPath,
       this.sqlite3.OPEN_READWRITE, (err) => {
         if (err) {
-          //! Add error handling
-          throw err;
-
+          this.handleError(err);
         } else {
           this.updateLoadingStatus(false);
         }
@@ -125,8 +111,7 @@ export class DatabaseService {
     this.db.serialize(() => {
       this.db.all(SQL, (err, rows) => {
         if (err) {
-          //! Add error handling
-          throw err;
+          this.handleError(err);
         } else {
           this.updateTableData(rows);
         }
@@ -139,9 +124,7 @@ export class DatabaseService {
 
     this.db.close((err) => {
       if (err) {
-        //! Add error handling
-        throw err;
-
+        this.handleError(err);
       } else {
         this.updateLoadingStatus(false);
       }
@@ -162,5 +145,10 @@ export class DatabaseService {
     }
 
     this.updateLoadingStatus(false);
+  }
+
+  private handleError(err) {
+    this.updateLoadingStatus(false);
+    this.errorService.showDialog(err.message);
   }
 }

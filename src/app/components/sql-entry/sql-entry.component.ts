@@ -2,6 +2,9 @@ import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { DatabaseService } from 'src/app/services/database.service';
 import { Subscription } from 'rxjs';
 import { QueryHistoryService } from 'src/app/services/query-history.service';
+import { MatDialog } from '@angular/material';
+import { TableInfoComponent } from '../modals/table-info/table-info.component';
+import { QueryHistoryComponent } from '../modals/query-history/query-history.component';
 
 @Component({
   selector: 'app-sql-entry',
@@ -17,7 +20,8 @@ export class SqlEntryComponent implements OnInit, OnDestroy {
   constructor(
     private ngZone: NgZone,
     private dbService: DatabaseService,
-    private queryHistoryService: QueryHistoryService
+    private queryHistoryService: QueryHistoryService,
+    public dialog: MatDialog
     ) { }
 
   ngOnInit() {
@@ -36,8 +40,29 @@ export class SqlEntryComponent implements OnInit, OnDestroy {
     });
   }
 
+  showInfo() {
+    const dialogRef = this.dialog.open(TableInfoComponent, {
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  showHistory() {
+    const dialogRef = this.dialog.open(QueryHistoryComponent, {
+      width: '600px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.sql = result;
+      }
+    });
+  }
+
   executeSql() {
-    this.dbService.getTableMetadata();
     this.queryHistoryService.addToHistory(this.sql);
     this.dbService.execute(this.sql);
   }

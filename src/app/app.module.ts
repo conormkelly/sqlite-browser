@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 // Material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -49,6 +49,9 @@ import { OutputTableComponent } from './components/output-table/output-table.com
 import { LoaderComponent } from './components/loader/loader.component';
 import { DatabaseSelectComponent } from './components/modals/database-select/database-select.component';
 import { TableInfoComponent } from './components/modals/table-info/table-info.component';
+import { TableDetailComponent } from './components/modals/table-info/table-detail/table-detail.component';
+import { QueryHistoryComponent } from './components/modals/query-history/query-history.component';
+import { ErrorComponent } from './components/modals/error/error.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,10 @@ import { TableInfoComponent } from './components/modals/table-info/table-info.co
     OutputTableComponent,
     LoaderComponent,
     DatabaseSelectComponent,
-    TableInfoComponent
+    TableInfoComponent,
+    TableDetailComponent,
+    QueryHistoryComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -98,6 +104,6 @@ import { TableInfoComponent } from './components/modals/table-info/table-info.co
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DatabaseSelectComponent, TableInfoComponent]
+  entryComponents: [DatabaseSelectComponent, TableInfoComponent, QueryHistoryComponent, ErrorComponent]
 })
 export class AppModule { }
