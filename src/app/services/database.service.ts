@@ -1,19 +1,19 @@
-import { Injectable } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
-import { Subject } from 'rxjs';
-import { TableData } from '../models/table.data';
-import { ErrorService } from './error.service';
+import { Injectable } from "@angular/core";
+import { ElectronService } from "ngx-electron";
+import { Subject } from "rxjs";
+import { TableData } from "../models/table.data";
+import { ErrorService } from "./error.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DatabaseService {
   constructor(
     private errorService: ErrorService,
     private electronService: ElectronService
-  ) { }
+  ) {}
 
-  private sqlite3 = this.electronService.remote.require('sqlite3').verbose();
+  private sqlite3 = this.electronService.remote.require("sqlite3").verbose();
 
   // Subjects for observables
   tableDataUpdated = new Subject<TableData>();
@@ -23,19 +23,24 @@ export class DatabaseService {
   private db;
 
   selectDatabase(callback) {
-    const thisWindow = this.electronService.remote.require('electron').BrowserWindow.getFocusedWindow();
+    const thisWindow = this.electronService.remote
+      .require("electron")
+      .BrowserWindow.getFocusedWindow();
     const options = {
       multiSelections: false,
-      filters: [{ name: 'SQLite database', extensions: ['db'] }],
-      title: 'Select database'
+      filters: [{ name: "SQLite database", extensions: ["db"] }],
+      title: "Select database"
     };
 
     this.electronService.remote.dialog.showOpenDialog(
-      thisWindow, options, (selectedDbPathArray) => {
+      thisWindow,
+      options,
+      selectedDbPathArray => {
         if (selectedDbPathArray) {
           callback(selectedDbPathArray[0]);
         }
-      });
+      }
+    );
   }
 
   getTableDataListener() {
@@ -83,7 +88,10 @@ export class DatabaseService {
           this.handleError(err);
         } else {
           tableMetadata[val] = rows;
-          if (Object.is(arr.length - 1, i)) {
+
+          const isLastItem = Object.is(arr.length - 1, i);
+
+          if (isLastItem) {
             this.tableMetadataUpdated.next(tableMetadata);
           }
         }
@@ -96,17 +104,19 @@ export class DatabaseService {
 
     this.db = new this.sqlite3.Database(
       dbPath,
-      this.sqlite3.OPEN_READWRITE, (err) => {
+      this.sqlite3.OPEN_READWRITE,
+      err => {
         if (err) {
           this.handleError(err);
         } else {
           this.updateLoadingStatus(false);
         }
-      });
+      }
+    );
   }
 
   execute(SQL) {
-    this.loadingStatusUpdated.next(true);
+    this.updateLoadingStatus(true);
 
     this.db.serialize(() => {
       this.db.all(SQL, (err, rows) => {
@@ -122,7 +132,7 @@ export class DatabaseService {
   close() {
     this.updateLoadingStatus(true);
 
-    this.db.close((err) => {
+    this.db.close(err => {
       if (err) {
         this.handleError(err);
       } else {
@@ -139,9 +149,8 @@ export class DatabaseService {
     if (rows.length > 0) {
       const headings = Object.keys(rows[0]);
       this.tableDataUpdated.next({ headings: headings, rows: rows });
-
     } else {
-      console.log('No rows!');
+      console.log("No rows!");
     }
 
     this.updateLoadingStatus(false);

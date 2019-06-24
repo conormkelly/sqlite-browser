@@ -1,25 +1,24 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { DatabaseService } from 'src/app/services/database.service';
+import { Component, OnInit, NgZone } from "@angular/core";
+import { Subscription } from "rxjs";
+import { DatabaseService } from "src/app/services/database.service";
 
 @Component({
-  selector: 'app-loader',
-  templateUrl: './loader.component.html',
-  styleUrls: ['./loader.component.css']
+  selector: "app-loader",
+  templateUrl: "./loader.component.html",
+  styleUrls: ["./loader.component.css"]
 })
 export class LoaderComponent implements OnInit {
   isLoading = true;
   loadingListener$: Subscription;
 
-  constructor(
-    private ngZone: NgZone,
-    private dbService: DatabaseService
-  ) { }
+  constructor(private ngZone: NgZone, private dbService: DatabaseService) {}
 
   ngOnInit() {
-    this.loadingListener$ = this.dbService.getLoadingListener().subscribe(isLoading => {
-      this.updateLoadingStatus(isLoading);
-    })
+    this.loadingListener$ = this.dbService
+      .getLoadingListener()
+      .subscribe(isLoading => {
+        this.updateLoadingStatus(isLoading);
+      });
   }
 
   ngOnDestroy() {
@@ -31,5 +30,4 @@ export class LoaderComponent implements OnInit {
       this.isLoading = isLoading;
     });
   }
-
 }

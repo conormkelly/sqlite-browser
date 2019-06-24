@@ -1,13 +1,15 @@
-import { Injectable } from '@angular/core';
-import { QueryHistoryItem } from '../models/query.history.item';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { QueryHistoryItem } from "../models/query.history.item";
+import { Subject, BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class QueryHistoryService {
   private history: QueryHistoryItem[] = [];
-  private historyUpdated = new BehaviorSubject<QueryHistoryItem[]>(this.history);
+  private historyUpdated = new BehaviorSubject<QueryHistoryItem[]>(
+    this.history
+  );
 
   getHistoryUpdatedListener() {
     return this.historyUpdated;

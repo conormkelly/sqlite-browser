@@ -5,7 +5,6 @@ import { ElectronService } from "ngx-electron";
   providedIn: "root"
 })
 export class ErrorService {
-
   showSqlError(errorMessage) {
     this.displayDialog("SQL Error", errorMessage);
   }

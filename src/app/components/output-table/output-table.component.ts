@@ -1,18 +1,25 @@
-import { Component, ViewChild, OnInit, NgZone, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  NgZone,
+  AfterViewInit,
+  OnDestroy
+} from "@angular/core";
 
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 
-import { Subscription } from 'rxjs';
-import { DatabaseService } from 'src/app/services/database.service';
-import { TableData } from 'src/app/models/table.data';
+import { Subscription } from "rxjs";
+import { DatabaseService } from "src/app/services/database.service";
+import { TableData } from "src/app/models/table.data";
 
 @Component({
-  selector: 'app-output-table',
-  templateUrl: './output-table.component.html',
-  styleUrls: ['./output-table.component.css']
+  selector: "app-output-table",
+  templateUrl: "./output-table.component.html",
+  styleUrls: ["./output-table.component.css"]
 })
 export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('tablePaginator', { static: false }) paginator: MatPaginator;
+  @ViewChild("tablePaginator", { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   tableData: TableData = { rows: [], headings: [] };
@@ -20,20 +27,16 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   dataSource: MatTableDataSource<object[]>;
 
-  constructor(
-    private ngZone: NgZone,
-    private dbService: DatabaseService
-  ) { }
+  constructor(private ngZone: NgZone, private dbService: DatabaseService) {}
 
   ngOnInit() {
     this.setTableProperties(this.tableData);
 
-    this.tableDataListener$ = this.dbService.getTableDataListener().subscribe(tableData => {
-      this.setTableProperties(tableData);
-    });
-
-    // TODO: Remove this hardcoded connection
-    this.dbService.connect('./chinook.db');
+    this.tableDataListener$ = this.dbService
+      .getTableDataListener()
+      .subscribe(tableData => {
+        this.setTableProperties(tableData);
+      });
   }
 
   ngAfterViewInit() {
@@ -59,5 +62,4 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dbService.close();
     this.tableDataListener$.unsubscribe();
   }
-
 }
