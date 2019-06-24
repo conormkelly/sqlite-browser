@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     margin: 1rem 1.5rem;
     max-width: 90%;
 }
@@ -11,7 +10,7 @@
     min-width: 80%;
 }
 
-.container-sidebar {
+.container-buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-around;

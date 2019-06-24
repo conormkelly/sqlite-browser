@@ -149,6 +149,6 @@ export class DatabaseService {
 
   private handleError(err) {
     this.updateLoadingStatus(false);
-    this.errorService.showDialog(err.message);
+    this.errorService.showSqlError(err.message);
   }
 }

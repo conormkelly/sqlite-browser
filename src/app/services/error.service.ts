@@ -1,34 +1,21 @@
-import { Injectable } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { ErrorComponent } from '../components/modals/error/error.component';
-import { TableInfoComponent } from '../components/modals/table-info/table-info.component';
+import { Injectable } from "@angular/core";
+import { ElectronService } from "ngx-electron";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ErrorService {
 
-  dialogIsOpen = false;
-
-  showDialog(errorMessage) {
-
-    if (!this.dialogIsOpen) {
-
-      const dialog = this.dialog.open(ErrorComponent, {
-        data: { errorMessage: errorMessage }
-      });
-
-      dialog.afterOpen().subscribe(() => {
-        this.dialogIsOpen = true;
-      })
-
-      dialog.afterClosed().subscribe(() => {
-        this.dialogIsOpen = false;
-      })
-
-    }
-
+  showSqlError(errorMessage) {
+    this.displayDialog("SQL Error", errorMessage);
   }
 
-  constructor(public dialog: MatDialog) { }
+  private displayDialog(title, message) {
+    // Delays opening to allow view to update
+    setTimeout(() => {
+      this.electronService.remote.dialog.showErrorBox(title, message);
+    }, 100);
+  }
+
+  constructor(private electronService: ElectronService) {}
 }

@@ -39,8 +39,6 @@ import {
   MatStepperModule,
 } from '@angular/material';
 
-// import { CdkTableModule } from '@angular/cdk/table';
-
 import { NgxElectronModule } from 'ngx-electron';
 
 import { AppComponent } from './app.component';
@@ -51,7 +49,6 @@ import { DatabaseSelectComponent } from './components/modals/database-select/dat
 import { TableInfoComponent } from './components/modals/table-info/table-info.component';
 import { TableDetailComponent } from './components/modals/table-info/table-detail/table-detail.component';
 import { QueryHistoryComponent } from './components/modals/query-history/query-history.component';
-import { ErrorComponent } from './components/modals/error/error.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +60,6 @@ import { ErrorComponent } from './components/modals/error/error.component';
     TableInfoComponent,
     TableDetailComponent,
     QueryHistoryComponent,
-    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,6 +100,6 @@ import { ErrorComponent } from './components/modals/error/error.component';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DatabaseSelectComponent, TableInfoComponent, QueryHistoryComponent, ErrorComponent]
+  entryComponents: [DatabaseSelectComponent, TableInfoComponent, QueryHistoryComponent]
 })
 export class AppModule { }

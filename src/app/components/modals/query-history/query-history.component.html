@@ -1,12 +1,11 @@
 <h3 mat-dialog-title>History</h3>
 
-
 <mat-dialog-content>
   <p *ngIf="history.length === 0">Nothing to see here!</p>
 
   <ul *ngIf="history.length > 0" class="list-group">
     <li *ngFor="let historyItem of history" class="list-group-item">
-      <div class="main-container">
+      <div class="history-item-container">
         <div class="sql-text"><p class="clickable-text" (click)="copyQuery(historyItem.text)">{{historyItem.text}}</p></div>
         <div class="sql-timestamp">{{historyItem.timestamp | date:'medium'}}</div>
       </div>

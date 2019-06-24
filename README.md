@@ -1,20 +1,9 @@
-# Get all tables
+# Simple SQLite DB Browser
 
-SELECT 
-    name
-FROM 
-    sqlite_master 
-WHERE 
-    type ='table' AND 
-    name NOT LIKE 'sqlite_%';
+Built with Angular & Electron.
 
-
-# Table info
-PRAGMA table_info(%tablename%);
-
-# Todo / Ideas
-* History feature
-* View tables and info once connected
-
-# Primary color for Bootstrap
-2196F3
+### To Run
+1. <code>npm install</code>
+2. <code>npm run postinstall</code>
+3. <code>ng build --watch</code>
+4. <code>npm start</code>

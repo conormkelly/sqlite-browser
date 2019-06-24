@@ -63,8 +63,11 @@ export class SqlEntryComponent implements OnInit, OnDestroy {
   }
 
   executeSql() {
-    this.queryHistoryService.addToHistory(this.sql);
-    this.dbService.execute(this.sql);
+    if (this.sql.trim().length > 0) {
+      this.queryHistoryService.addToHistory(this.sql);
+      this.dbService.execute(this.sql);
+    }
+
   }
 
 }

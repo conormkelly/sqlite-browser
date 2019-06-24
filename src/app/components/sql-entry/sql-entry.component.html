@@ -4,7 +4,7 @@
     <textarea [(ngModel)]="sql" class="sql-input form-control" placeholder="Enter SQL" rows="3"></textarea>
   </div>
 
-  <div class="container-sidebar">
+  <div class="container-buttons">
       <div class="container-execute-button">
           <button [disabled]="isLoading" (click)="executeSql()" type="button" class="btn btn-sm btn-primary">Execute</button>
         </div>
