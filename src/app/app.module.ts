@@ -1,54 +1,23 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+// Angular
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
 // Material
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AppMaterialModule } from "./modules/app-material/app-material.module";
 
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSliderModule,
-  MatSlideToggleModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule,
-  MatStepperModule,
-} from '@angular/material';
+import { NgxElectronModule } from "ngx-electron";
 
-import { NgxElectronModule } from 'ngx-electron';
-
-import { AppComponent } from './app.component';
-import { SqlEntryComponent } from './components/sql-entry/sql-entry.component';
-import { OutputTableComponent } from './components/output-table/output-table.component';
-import { LoaderComponent } from './components/loader/loader.component';
-import { DatabaseSelectComponent } from './components/modals/database-select/database-select.component';
-import { TableInfoComponent } from './components/modals/table-info/table-info.component';
-import { TableDetailComponent } from './components/modals/table-info/table-detail/table-detail.component';
-import { QueryHistoryComponent } from './components/modals/query-history/query-history.component';
+// Components
+import { AppComponent } from "./app.component";
+import { SqlEntryComponent } from "./components/sql-entry/sql-entry.component";
+import { OutputTableComponent } from "./components/output-table/output-table.component";
+import { LoaderComponent } from "./components/loader/loader.component";
+import { DatabaseSelectComponent } from "./components/modals/database-select/database-select.component";
+import { TableInfoComponent } from "./components/modals/table-info/table-info.component";
+import { TableDetailComponent } from "./components/modals/table-info/table-detail/table-detail.component";
+import { QueryHistoryComponent } from "./components/modals/query-history/query-history.component";
 
 @NgModule({
   declarations: [
@@ -59,47 +28,21 @@ import { QueryHistoryComponent } from './components/modals/query-history/query-h
     DatabaseSelectComponent,
     TableInfoComponent,
     TableDetailComponent,
-    QueryHistoryComponent,
+    QueryHistoryComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
     NgxElectronModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatStepperModule
+    AppMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DatabaseSelectComponent, TableInfoComponent, QueryHistoryComponent]
+  entryComponents: [
+    DatabaseSelectComponent,
+    TableInfoComponent,
+    QueryHistoryComponent
+  ]
 })
-export class AppModule { }
+export class AppModule {}
