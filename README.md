@@ -2,6 +2,8 @@
 
 Built with Angular & Electron.
 
+UI Framework - Angular Material
+
 ### To Run
 1. <code>npm install</code>
 2. <code>npm run postinstall</code>
