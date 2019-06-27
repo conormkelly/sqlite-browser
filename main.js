@@ -7,6 +7,12 @@ const url = require("url");
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
+// Live reload
+require('electron-reload')(__dirname, {
+  electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+});
+
+
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
