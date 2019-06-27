@@ -3,7 +3,7 @@ import { ElectronService } from "ngx-electron";
 import { Subject } from "rxjs";
 import { TableData } from "../models/table.data";
 import { ErrorService } from "./error.service";
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from "@angular/material";
 
 @Injectable({
   providedIn: "root"
@@ -149,9 +149,17 @@ export class DatabaseService {
 
   private updateTableData(rows) {
     if (rows.length > 0) {
-      const headings = Object.keys(rows[0]);
+      const headingNames = Object.keys(rows[0]);
+
+      // Initialising width as non-zero value
+      // It's re-calculated in the view
+      const headings = headingNames.map(headingName => {
+        return { name: headingName, width: 1 };
+      });
+
       this.tableDataUpdated.next({ headings: headings, rows: rows });
     } else {
+      //TODO : Notify user
       console.log("No rows!");
     }
 
@@ -163,11 +171,15 @@ export class DatabaseService {
     this.updateLoadingStatus(false);
   }
 
-
   showSnack(message: string, type?: string, duration?: any) {
     this.snackBar.open(message, type, {
       duration: duration ? duration : 2000,
-      panelClass: type === 'info' ? ['info'] : type === 'success' ? ['success'] : ['error'],
+      panelClass:
+        type === "info"
+          ? ["info"]
+          : type === "success"
+          ? ["success"]
+          : ["error"]
     });
   }
 }

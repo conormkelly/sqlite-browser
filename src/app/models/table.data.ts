@@ -1,4 +1,4 @@
 export interface TableData {
-    headings: string[];
+    headings: {name: string, width: number}[];
     rows: any[];
 }

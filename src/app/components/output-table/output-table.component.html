@@ -1,16 +1,12 @@
-<!-- <mat-form-field>
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-</mat-form-field> -->
+<mat-table class="main-table" cdkDropListGroup [dataSource]="dataSource">
 
-<mat-table class="main-table" matSort [dataSource]="dataSource">
-
-  <ng-container *ngFor="let heading of (tableData.headings); let colIndex = index" matColumnDef="{{heading}}">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{heading}}</th>
-    <td mat-cell *matCellDef="let row">{{row[heading]}}</td>
+  <ng-container *ngFor="let heading of (tableData.headings); let colIndex = index" matColumnDef="{{heading.name}}">
+    <th mat-header-cell (mousedown)="onResizeColumn($event, colIndex)" *matHeaderCellDef>{{heading.name}}</th>
+    <td mat-cell *matCellDef="let row">{{row[heading.name]}}</td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="(tableData.headings)"></tr>
-  <tr mat-row *matRowDef="let row; columns: (tableData.headings)"></tr>
+  <tr mat-header-row *matHeaderRowDef="(displayedColumns)"></tr>
+  <tr mat-row *matRowDef="let row; columns: (displayedColumns)"></tr>
 
 </mat-table>
 

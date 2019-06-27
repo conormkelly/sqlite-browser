@@ -1,25 +1,13 @@
-.main {
-    display: flex;
-    margin: 1rem 1.5rem;
-    justify-content: space-between;
-    flex-direction: row;
-    max-width: 90%;
-}
-
 .main-table {
-    margin: 1rem 2rem;
-    min-width: 90%;
-    max-width: 90%;
+  width: 100%;
+  overflow: auto;
 }
 
-.mat-row {
-    height: auto;
+th.mat-header-cell {
+  padding: 10px;
+  cursor: col-resize;
 }
 
-.mat-header-cell {
-    padding: 10px 20px;
-}
-
-.mat-cell {
-    padding: 10px 20px;
+td.mat-cell {
+  padding: 10px;
 }
