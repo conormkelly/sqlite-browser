@@ -90,12 +90,12 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
     const isTableData = this.tableData.headings.length > 0;
 
     if (isTableData) {
-      let totalWidth = 0;
-      this.tableData.headings.forEach(column => {
-        totalWidth += column.width;
-      });
+      const totalColumnWidth = this.tableData.headings.reduce(
+        (acc, column) => acc + column.width,
+        0
+      );
 
-      const scale = (tableWidth - 10) / totalWidth;
+      const scale = (tableWidth - 5) / totalColumnWidth;
       this.tableData.headings.forEach(column => {
         column.width *= scale;
         this.setColumnWidth(column);
@@ -105,22 +105,20 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setColumnWidth(column: any) {
     setTimeout(() => {
-      const columnEls = Array.from(
-        document.getElementsByClassName(
-          `cdk-column-${this.capitalise(column.name)}`
-        )
+      const columnClass = `cdk-column-${this.capitalise(column.name)}`;
+
+      const columnElements = Array.from(
+        document.getElementsByClassName(columnClass)
       );
 
-      columnEls.forEach((el: HTMLElement) => {
+      columnElements.forEach((el: HTMLElement) => {
         el.style.width = column.width + "px";
       });
     });
   }
 
   private capitalise(str) {
-    const firstChar = str.charAt(0).toUpperCase();
-    const remainingChars = str.slice(1);
-    return firstChar + remainingChars;
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   onResizeColumn(event, columnIndex) {
@@ -184,17 +182,21 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  setColumnWidthChanges(index: number, width: number) {
-    const originalWidth = this.tableData.headings[index].width;
+  setColumnWidthChanges(columnIndex: number, width: number) {
+    const originalWidth = this.tableData.headings[columnIndex].width;
     const dx = width - originalWidth;
+
     if (dx !== 0) {
-      const j = this.isResizingRight ? index + 1 : index - 1;
-      const newWidth = this.tableData.headings[j].width - dx;
+      const adjacentColumnIndex = this.isResizingRight
+        ? columnIndex + 1
+        : columnIndex - 1;
+      const newWidth = this.tableData.headings[adjacentColumnIndex].width - dx;
+
       if (newWidth > 50) {
-        this.tableData.headings[index].width = width;
-        this.setColumnWidth(this.tableData.headings[index]);
-        this.tableData.headings[j].width = newWidth;
-        this.setColumnWidth(this.tableData.headings[j]);
+        this.tableData.headings[columnIndex].width = width;
+        this.setColumnWidth(this.tableData.headings[columnIndex]);
+        this.tableData.headings[adjacentColumnIndex].width = newWidth;
+        this.setColumnWidth(this.tableData.headings[adjacentColumnIndex]);
       }
     }
   }
