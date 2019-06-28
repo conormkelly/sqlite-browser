@@ -1,18 +1,16 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
-import { DatabaseSelectComponent } from "./components/modals/database-select/database-select.component";
+import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from './services/database.service';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(public dialog: MatDialog) {}
+  constructor(private dbService: DatabaseService) {}
 
   ngOnInit() {
-    this.dialog.open(DatabaseSelectComponent, {
-      width: "250px"
-    });
+    //! Temporarily auto-connect to chinook for development purposes
+    this.dbService.connect('./sqlite-example-db/chinook.db');
   }
 }
