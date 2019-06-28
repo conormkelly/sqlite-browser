@@ -1,4 +1,6 @@
+import { Heading } from './heading';
+
 export interface TableData {
-    headings: {name: string, width: number}[];
-    rows: any[];
+  headings: Heading[];
+  rows: any[];
 }
