@@ -3,7 +3,6 @@ import { ElectronService } from "ngx-electron";
 import { Subject } from "rxjs";
 import { TableData } from "../models/table.data";
 import { ErrorService } from "./error.service";
-import { MatSnackBar } from "@angular/material";
 
 @Injectable({
   providedIn: "root"
@@ -12,7 +11,6 @@ export class DatabaseService {
   constructor(
     private errorService: ErrorService,
     private electronService: ElectronService,
-    public snackBar: MatSnackBar
   ) {}
 
   private sqlite3 = this.electronService.remote.require("sqlite3").verbose();
@@ -169,17 +167,5 @@ export class DatabaseService {
   private handleError(err) {
     this.errorService.showSqlError(err.message);
     this.updateLoadingStatus(false);
-  }
-
-  showSnack(message: string, type?: string, duration?: any) {
-    this.snackBar.open(message, type, {
-      duration: duration ? duration : 2000,
-      panelClass:
-        type === "info"
-          ? ["info"]
-          : type === "success"
-          ? ["success"]
-          : ["error"]
-    });
   }
 }
