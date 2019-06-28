@@ -1,19 +1,20 @@
-import { Injectable } from "@angular/core";
-import { ElectronService } from "ngx-electron";
-import { Subject } from "rxjs";
-import { TableData } from "../models/table.data";
-import { ErrorService } from "./error.service";
+import { Injectable } from '@angular/core';
+import { ElectronService } from 'ngx-electron';
+import { Subject } from 'rxjs';
+import { TableData } from '../models/table.data';
+import { SnackbarService } from './snackbar.service';
+import { Heading } from '../models/heading';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class DatabaseService {
   constructor(
-    private errorService: ErrorService,
-    private electronService: ElectronService,
+    private snackBarService: SnackbarService,
+    private electronService: ElectronService
   ) {}
 
-  private sqlite3 = this.electronService.remote.require("sqlite3").verbose();
+  private sqlite3 = this.electronService.remote.require('sqlite3').verbose();
 
   // Subjects for observables
   tableDataUpdated = new Subject<TableData>();
@@ -24,12 +25,12 @@ export class DatabaseService {
 
   selectDatabase(callback) {
     const thisWindow = this.electronService.remote
-      .require("electron")
+      .require('electron')
       .BrowserWindow.getFocusedWindow();
     const options = {
       multiSelections: false,
-      filters: [{ name: "SQLite database", extensions: ["db"] }],
-      title: "Select database"
+      filters: [{ name: 'SQLite database', extensions: ['db'] }],
+      title: 'Select database'
     };
 
     this.electronService.remote.dialog.showOpenDialog(
@@ -80,14 +81,14 @@ export class DatabaseService {
   private extractMetadata(tableNames: string[]) {
     let tableMetadata = {};
 
-    tableNames.forEach((val, i, arr) => {
-      const sql = `PRAGMA table_info(${val})`;
+    tableNames.forEach((tableName, i, arr) => {
+      const sql = `PRAGMA table_info(${tableName})`;
 
       this.db.all(sql, (err, rows) => {
         if (err) {
           this.handleError(err);
         } else {
-          tableMetadata[val] = rows;
+          tableMetadata[tableName] = rows;
 
           const isLastItem = Object.is(arr.length - 1, i);
 
@@ -147,25 +148,32 @@ export class DatabaseService {
 
   private updateTableData(rows) {
     if (rows.length > 0) {
-      const headingNames = Object.keys(rows[0]);
-
-      // Initialising width as non-zero value
-      // It's re-calculated in the view
-      const headings = headingNames.map(headingName => {
-        return { name: headingName, width: 1 };
-      });
-
+      const headings = this.getHeadings(rows);
       this.tableDataUpdated.next({ headings: headings, rows: rows });
     } else {
-      //TODO : Notify user
-      console.log("No rows!");
+      this.notifyUserNoRows();
     }
 
     this.updateLoadingStatus(false);
   }
 
-  private handleError(err) {
-    this.errorService.showSqlError(err.message);
+  private getHeadings(rows): Heading[] {
+    const headingNames = Object.keys(rows[0]);
+
+    // Initialising width as non-zero value
+    // It's re-calculated in the view
+    return headingNames.map(headingName => {
+      return { name: headingName, width: 1 };
+    });
+  }
+
+  private notifyUserNoRows() {
+    this.tableDataUpdated.next({ headings: [], rows: [] });
+    this.snackBarService.showSnack('No rows', 'info', 3000);
+  }
+
+  private handleError(err: Error) {
+    this.snackBarService.showSnack(err.message, 'error', 3000);
     this.updateLoadingStatus(false);
   }
 }
