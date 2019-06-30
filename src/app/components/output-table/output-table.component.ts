@@ -8,24 +8,24 @@ import {
   ElementRef,
   Renderer2,
   HostListener
-} from "@angular/core";
+} from '@angular/core';
 
-import { MatPaginator, MatTableDataSource, MatTable } from "@angular/material";
+import { MatPaginator, MatTableDataSource, MatTable } from '@angular/material';
 
-import { Subscription } from "rxjs";
-import { DatabaseService } from "src/app/services/database.service";
-import { TableData } from "src/app/models/table.data";
+import { Subscription } from 'rxjs';
+import { DatabaseService } from 'src/app/services/database.service';
+import { TableData } from 'src/app/models/table.data';
 
 @Component({
-  selector: "app-output-table",
-  templateUrl: "./output-table.component.html",
-  styleUrls: ["./output-table.component.css"]
+  selector: 'app-output-table',
+  templateUrl: './output-table.component.html',
+  styleUrls: ['./output-table.component.css']
 })
 export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
   // Table elements
   @ViewChild(MatTable, { read: ElementRef, static: true })
   private matTableRef: ElementRef;
-  @ViewChild("tablePaginator", { static: true }) paginator: MatPaginator;
+  @ViewChild('tablePaginator', { static: true }) paginator: MatPaginator;
 
   // Subscription
   tableDataListener$: Subscription;
@@ -50,7 +50,7 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
     private dbService: DatabaseService
   ) {}
 
-  @HostListener("window:resize", ["$event"])
+  @HostListener('window:resize', ['$event'])
   onResize(_event) {
     this.setTableResize(this.matTableRef.nativeElement.clientWidth);
   }
@@ -112,7 +112,7 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
       );
 
       columnElements.forEach((el: HTMLElement) => {
-        el.style.width = column.width + "px";
+        el.style.width = column.width + 'px';
       });
     });
   }
@@ -152,8 +152,8 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   mouseMove(index: number) {
     this.resizableMousemove = this.renderer.listen(
-      "document",
-      "mousemove",
+      'document',
+      'mousemove',
       event => {
         if (this.mouseIsPressed && event.buttons) {
           const dx = this.isResizingRight
@@ -169,8 +169,8 @@ export class OutputTableComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     );
     this.resizableMouseup = this.renderer.listen(
-      "document",
-      "mouseup",
+      'document',
+      'mouseup',
       _event => {
         if (this.mouseIsPressed) {
           this.mouseIsPressed = false;
