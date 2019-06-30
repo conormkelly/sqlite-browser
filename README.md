@@ -8,4 +8,4 @@ UI Framework - Angular Material
 1. <code>npm install</code>
 3. <code>ng build --watch</code>
 4. <code>npm start</code>
-5. Select the chinook.db (included in repo) when prompted.
+5. On app start, the SQLite sample db (chinook) is auto-connected for dev purposes.
