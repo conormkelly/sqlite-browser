@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { DatabaseService } from "src/app/services/database.service";
-import { MatDialogRef } from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { DatabaseService } from 'src/app/services/database.service';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
-  selector: "app-database-select",
-  templateUrl: "./database-select.component.html",
-  styleUrls: ["./database-select.component.css"]
+  selector: 'app-database-select',
+  templateUrl: './database-select.component.html',
+  styleUrls: ['./database-select.component.css']
 })
 export class DatabaseSelectComponent implements OnInit {
   constructor(
