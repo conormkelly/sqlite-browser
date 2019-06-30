@@ -1,13 +1,13 @@
-import { Component, OnInit, NgZone } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
-import { QueryHistoryItem } from "src/app/models/query.history.item";
-import { Subscription } from "rxjs";
-import { QueryHistoryService } from "src/app/services/query-history.service";
+import { Component, OnInit, NgZone } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+import { QueryHistoryItem } from 'src/app/models/query.history.item';
+import { Subscription } from 'rxjs';
+import { QueryHistoryService } from 'src/app/services/query-history.service';
 
 @Component({
-  selector: "app-query-history",
-  templateUrl: "./query-history.component.html",
-  styleUrls: ["./query-history.component.css"]
+  selector: 'app-query-history',
+  templateUrl: './query-history.component.html',
+  styleUrls: ['./query-history.component.css']
 })
 export class QueryHistoryComponent implements OnInit {
   history: QueryHistoryItem[] = [];

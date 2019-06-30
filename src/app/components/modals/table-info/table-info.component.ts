@@ -17,15 +17,17 @@ export class TableInfoComponent implements OnInit {
     private dialogRef: MatDialogRef<TableInfoComponent>,
     private ngZone: NgZone,
     private dbService: DatabaseService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.tableMetadataListener$ = this.dbService.getTableMetadataListener().subscribe(tableMetadata => {
-      this.ngZone.run(() => {
-        this.tableNames = Object.keys(tableMetadata);
-        this.tableMetadata = tableMetadata;
+    this.tableMetadataListener$ = this.dbService
+      .getTableMetadataListener()
+      .subscribe(tableMetadata => {
+        this.ngZone.run(() => {
+          this.tableNames = Object.keys(tableMetadata);
+          this.tableMetadata = tableMetadata;
+        });
       });
-    });
 
     this.dbService.getTableMetadata();
   }
@@ -37,5 +39,4 @@ export class TableInfoComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
-
 }

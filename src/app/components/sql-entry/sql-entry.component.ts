@@ -1,18 +1,18 @@
-import { Component, OnInit, OnDestroy, NgZone } from "@angular/core";
-import { DatabaseService } from "src/app/services/database.service";
-import { Subscription } from "rxjs";
-import { QueryHistoryService } from "src/app/services/query-history.service";
-import { MatDialog } from "@angular/material";
-import { TableInfoComponent } from "../modals/table-info/table-info.component";
-import { QueryHistoryComponent } from "../modals/query-history/query-history.component";
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
+import { DatabaseService } from 'src/app/services/database.service';
+import { Subscription } from 'rxjs';
+import { QueryHistoryService } from 'src/app/services/query-history.service';
+import { MatDialog } from '@angular/material';
+import { TableInfoComponent } from '../modals/table-info/table-info.component';
+import { QueryHistoryComponent } from '../modals/query-history/query-history.component';
 
 @Component({
-  selector: "app-sql-entry",
-  templateUrl: "./sql-entry.component.html",
-  styleUrls: ["./sql-entry.component.css"]
+  selector: 'app-sql-entry',
+  templateUrl: './sql-entry.component.html',
+  styleUrls: ['./sql-entry.component.css']
 })
 export class SqlEntryComponent implements OnInit, OnDestroy {
-  sql = "";
+  sql = '';
 
   isLoading = true;
   loadingListener$: Subscription;
@@ -44,13 +44,13 @@ export class SqlEntryComponent implements OnInit, OnDestroy {
 
   showInfo() {
     this.dialog.open(TableInfoComponent, {
-      width: "600px"
+      width: '600px'
     });
   }
 
   showHistory() {
     const dialogRef = this.dialog.open(QueryHistoryComponent, {
-      width: "600px"
+      width: '600px'
     });
 
     dialogRef.afterClosed().subscribe(selectedSQL => {

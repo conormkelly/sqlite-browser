@@ -1,11 +1,11 @@
-import { Component, OnInit, NgZone } from "@angular/core";
-import { Subscription } from "rxjs";
-import { DatabaseService } from "src/app/services/database.service";
+import { Component, OnInit, NgZone } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
-  selector: "app-loader",
-  templateUrl: "./loader.component.html",
-  styleUrls: ["./loader.component.css"]
+  selector: 'app-loader',
+  templateUrl: './loader.component.html',
+  styleUrls: ['./loader.component.css']
 })
 export class LoaderComponent implements OnInit {
   isLoading = false;
