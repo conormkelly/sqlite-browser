@@ -1,4 +1,4 @@
 export interface QueryHistoryItem {
-    text: string;
-    timestamp: Date;
+  text: string;
+  timestamp: Date;
 }
